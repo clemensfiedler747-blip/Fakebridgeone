@@ -1,62 +1,127 @@
-# Fakebridgeon
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Guthaben Code Scanner</title>
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambridge Login Demo</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; text-align: center; }
-        #preview { max-width: 300px; display: block; margin: 10px auto; }
-        .loading { color: blue; display: none; }
+        /* Grunddesign */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #4db6ac; /* Die türkise Hintergrundfarbe aus deinem Bild */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Die weiße Box in der Mitte */
+        .login-card {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        h2 { color: #333; margin-bottom: 5px; }
+        p.subtitle { color: #777; font-size: 0.9em; margin-bottom: 20px; }
+
+        /* Social Buttons */
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-social {
+            padding: 10px;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #555;
+            cursor: not-allowed; /* Zeigt, dass man nichts machen kann */
+            opacity: 0.6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Eingabefelder */
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9em; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #eee;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            cursor: not-allowed;
+        }
+
+        /* Der lila Button */
+        .btn-login {
+            background-color: #7c4dff;
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: not-allowed;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        .links {
+            margin-top: 15px;
+            font-size: 0.85em;
+            color: #7c4dff;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 
-    <h2>Guthaben-Code scannen</h2>
-    
-    <input type="file" id="imageInput" accept="image/*">
-    <br>
-    <img id="preview">
-    
-    <p class="loading" id="status">Verarbeite Bild...</p>
+    <div class="login-card">
+        <h2>Log in</h2>
+        <p class="subtitle">with</p>
 
-    <div>
-        <label for="giftCardCode">Dein Code:</label>
-        <input type="text" id="giftCardCode" placeholder="Code wird erkannt...">
-        <button onclick="alert('Code eingelöst!')">Einlösen</button>
+        <div class="social-buttons">
+            <button class="btn-social" disabled>Facebook</button>
+            <button class="btn-social" disabled>Google</button>
+            <button class="btn-social" disabled>Apple</button>
+        </div>
+
+        <p class="subtitle">or</p>
+
+        <div class="input-group">
+            <label>Login</label>
+            <input type="text" placeholder="Enter your username or email address" disabled>
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" placeholder="Enter your password" disabled>
+        </div>
+
+        <button class="btn-login" disabled>Log in</button>
+
+        <div class="links">
+            Don't have an account yet?
+        </div>
     </div>
 
-    <script>
-        const imageInput = document.getElementById('imageInput');
-        const preview = document.getElementById('preview');
-        const codeInput = document.getElementById('giftCardCode');
-        const status = document.getElementById('status');
-
-        imageInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            // Bildvorschau anzeigen
-            preview.src = URL.createObjectURL(file);
-            status.style.display = 'block';
-            codeInput.value = "Lade...";
-
-            // Texterkennung starten
-            Tesseract.recognize(
-                file,
-                'eng', // Sprache (eng funktioniert für Codes meist am besten)
-                { logger: m => console.log(m) }
-            ).then(({ data: { text } }) => {
-                // Den erkannten Text säubern (Leerzeichen/Umbrüche entfernen)
-                const cleanCode = text.replace(/\s+/g, '').toUpperCase();
-                codeInput.value = cleanCode;
-                status.style.display = 'none';
-            }).catch(err => {
-                console.error(err);
-                status.innerText = "Fehler bei der Erkennung.";
-            });
-        });
-    </script>
 </body>
-</html>
+</html> 
