@@ -3,92 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cambridge Login Demo</title>
+    <title>Cambridge Login - Aktiv</title>
     <style>
-        /* Grunddesign */
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #4db6ac; /* Die türkise Hintergrundfarbe aus deinem Bild */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #4db6ac; /* Original Türkis */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
 
-        /* Die weiße Box in der Mitte */
         .login-card {
             background: white;
-            width: 100%;
+            width: 90%;
             max-width: 400px;
-            padding: 40px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-radius: 8px;
         }
 
-        h2 { color: #333; margin-bottom: 5px; }
-        p.subtitle { color: #777; font-size: 0.9em; margin-bottom: 20px; }
+        h2 { color: #333; margin-bottom: 20px; font-weight: 500; }
 
-        /* Social Buttons */
-        .social-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        /* Input Styles */
+        .input-group {
+            text-align: left;
             margin-bottom: 20px;
         }
 
-        .btn-social {
-            padding: 10px;
-            border: 1px solid #ddd;
-            background: #fff;
-            color: #555;
-            cursor: not-allowed; /* Zeigt, dass man nichts machen kann */
-            opacity: 0.6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            font-size: 0.85em; 
+            color: #444;
         }
-
-        /* Eingabefelder */
-        .input-group {
-            text-align: left;
-            margin-bottom: 15px;
-        }
-
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9em; }
 
         input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #eee;
-            background-color: #f9f9f9;
+            padding: 14px;
+            border: 1px solid #ddd;
+            background-color: #fcfcfc;
+            border-radius: 4px;
             box-sizing: border-box;
-            cursor: not-allowed;
+            transition: border 0.3s;
         }
 
-        /* Der lila Button */
+        input:focus {
+            outline: none;
+            border-color: #7c4dff;
+            background-color: #fff;
+        }
+
+        /* Der lila Login-Button */
         .btn-login {
             background-color: #7c4dff;
             color: white;
             border: none;
-            padding: 15px;
+            padding: 14px;
             width: 100%;
-            border-radius: 25px;
+            border-radius: 30px;
             font-size: 1em;
             font-weight: bold;
-            cursor: not-allowed;
-            opacity: 0.7;
-            margin-top: 10px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
         }
 
-        .links {
-            margin-top: 15px;
-            font-size: 0.85em;
+        .btn-login:hover {
+            background-color: #6a3de8;
+        }
+
+        .btn-login:active {
+            transform: scale(0.98);
+        }
+
+        .footer-links {
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .footer-links a {
             color: #7c4dff;
-            text-decoration: underline;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -96,32 +96,41 @@
 
     <div class="login-card">
         <h2>Log in</h2>
-        <p class="subtitle">with</p>
 
-        <div class="social-buttons">
-            <button class="btn-social" disabled>Facebook</button>
-            <button class="btn-social" disabled>Google</button>
-            <button class="btn-social" disabled>Apple</button>
-        </div>
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="username">Login</label>
+                <input type="text" id="username" name="username" placeholder="E-Mail oder Benutzername" required>
+            </div>
 
-        <p class="subtitle">or</p>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Passwort eingeben" required>
+            </div>
 
-        <div class="input-group">
-            <label>Login</label>
-            <input type="text" placeholder="Enter your username or email address" disabled>
-        </div>
+            <button type="submit" class="btn-login">Log in</button>
+        </form>
 
-        <div class="input-group">
-            <label>Password</label>
-            <input type="password" placeholder="Enter your password" disabled>
-        </div>
-
-        <button class="btn-login" disabled>Log in</button>
-
-        <div class="links">
-            Don't have an account yet?
+        <div class="footer-links">
+            <p><a href="#">Passwort vergessen?</a></p>
+            <p>Noch kein Konto? <a href="#">Hier registrieren</a></p>
         </div>
     </div>
 
+    <script>
+        // Funktion, die beim Abschicken ausgeführt wird
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Verhindert das Neuladen der Seite
+
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            // Hier würde normalerweise die Prüfung gegen eine Datenbank stehen
+            alert("Versuchter Login!\nBenutzer: " + user + "\nPasswort: " + pass);
+            
+            console.log("Daten gesendet:", { user, pass });
+        });
+    </script>
+
 </body>
-</html> 
+</html>
